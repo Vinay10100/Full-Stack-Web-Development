@@ -1,0 +1,65 @@
+/* Basic syntax and structure */
+body {
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+/* Background images */
+.background-image {
+  background-image: url('image.jpeg');
+  background-size: cover;
+  background-position: center;
+  height: 300px;
+}
+
+/* Colors and properties */
+.text-color {
+  color: #ff0000;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* Manipulating texts */
+.text-manipulation {
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+/* Using fonts */
+.font-style {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 24px;
+}
+
+/* Borders and boxes */
+.border-box {
+  border: 1px solid #000;
+  padding: 10px;
+  margin: 10px;
+  width: 200px;
+  height: 100px;
+}
+
+/* Margins and padding */
+.margins-padding {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  margin-left: 30px;
+  margin-right: 40px;
+  padding: 5px;
+}
+
+/* Lists */
+.list-style {
+  list-style-type: square;
+  margin-left: 20px;
+}
+
+/* Positioning */
+.positioning {
+  position: relative;
+  top: 50px;
+  left: 50px;
+}
