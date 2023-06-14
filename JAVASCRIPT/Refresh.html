@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Self-Modifying Web Page</title>
+</head>
+<body>
+<h1 id="message">Initial Message</h1>
+
+<script>
+    // JavaScript program to self-modify the web page every one minute
+
+    // Function to update the content of the web page
+    function updateContent() {
+      var messageElement = document.getElementById('message');
+      var randomMessage = generateRandomMessage();
+      messageElement.textContent = randomMessage;
+    }
+
+    // Function to generate a random message
+    function generateRandomMessage() {
+      var messages = [
+        "Hello!",
+        "Welcome!",
+        "Have a great day!",
+        "Stay curious!",
+        "Keep learning!",
+        "Be awesome!"
+      ];
+
+      var randomIndex = Math.floor(Math.random() * messages.length);
+      return messages[randomIndex];
+    }
+
+    // Initial update
+    updateContent();
+
+    // Set interval to update content every one minute (60000 milliseconds)
+    setInterval(updateContent, 600);
+  </script>
+</body>
+</html>
