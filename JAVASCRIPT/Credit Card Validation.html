@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Credit Card Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            background-color: #f2f2f2;
+            border: 1px solid #ccc;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+    <script>
+        function validateCreditCard() {
+            var cardNumber = document.getElementById('cardNumber').value;
+            var cardType = getCardType(cardNumber);
+
+            // Reset previous results
+            document.getElementById('cardType').innerText = '';
+            document.getElementById('result').innerText = '';
+            document.getElementById('result').className = 'result';
+
+            if (cardNumber === '') {
+                document.getElementById('result').innerText = 'Please enter a credit card number.';
+                document.getElementById('result').className = 'result error';
+                return;
+            }
+
+            if (!isValidLength(cardNumber, cardType)) {
+                document.getElementById('result').innerText = 'Invalid card number length.';
+                document.getElementById('result').className = 'result error';
+                return;
+            }
+
+            if (!isValidPrefix(cardNumber, cardType)) {
+                document.getElementById('result').innerText = 'Invalid card number prefix.';
+                document.getElementById('result').className = 'result error';
+                return;
+            }
+
+            document.getElementById('cardType').innerText = 'Card Type: ' + cardType;
+            document.getElementById('result').innerText = 'Credit card number is valid.';
+        }
+
+        function getCardType(cardNumber) {
+            // Card types and their prefixes
+            var cardTypes = [
+                { type: 'Visa', prefix: '4', lengths: [13, 16, 19] },
+                { type: 'Mastercard', prefix: ['51', '52', '53', '54', '55'], lengths: [16] },
+                { type: 'American Express', prefix: ['34', '37'], lengths: [15] },
+                { type: 'Discover', prefix: '6011', lengths: [16] }
+                // Add more card types and their prefixes here
+            ];
+
+            for (var i = 0; i < cardTypes.length; i++) {
+                var cardType = cardTypes[i];
+                var prefixes = cardType.prefix;
+
+                if (typeof prefixes === 'string') {
+                    if (cardNumber.startsWith(prefixes))
+                        return cardType.type;
+                } else if (Array.isArray(prefixes)) {
+                    for (var j = 0; j < prefixes.length; j++) {
+                        if (cardNumber.startsWith(prefixes[j]))
+                            return cardType.type;
+                    }
+                }
+            }
+
+            return 'Unknown';
+        }
+
+        function isValidLength(cardNumber, cardType) {
+            var cardTypes = [
+                { type: 'Visa', lengths: [13, 16, 19] },
+                { type: 'Mastercard', lengths: [16] },
+                { type: 'American Express', lengths: [15] },
+                { type: 'Discover', lengths: [16] }
+                // Add more card types and their lengths here
+            ];
+
+            for (var i = 0; i < cardTypes.length; i++) {
+                var cardTypeData = cardTypes[i];
+
+                if (cardTypeData.type === cardType) {
+                    return cardTypeData.lengths.includes(cardNumber.length);
+                }
+            }
+
+            return false;
+        }
+
+        function isValidPrefix(cardNumber, cardType) {
+            var cardTypes = [
+                { type: 'Visa', prefix: '4' },
+                { type: 'Mastercard', prefix: ['51', '52', '53', '54', '55'] },
+                { type: 'American Express', prefix: ['34', '37'] },
+                { type: 'Discover', prefix: '6011' }
+                // Add more card types and their prefixes here
+            ];
+
+            for (var i = 0; i < cardTypes.length; i++) {
+                var cardTypeData = cardTypes[i];
+                var prefixes = cardTypeData.prefix;
+
+                if (cardTypeData.type === cardType) {
+                    if (typeof prefixes === 'string') {
+                        return cardNumber.startsWith(prefixes);
+                    } else if (Array.isArray(prefixes)) {
+                        for (var j = 0; j < prefixes.length; j++) {
+                            if (cardNumber.startsWith(prefixes[j]))
+                                return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+    </script>
+</head>
+<body>
+<h1>Credit Card Validation</h1>
+<div class="form-container">
+    <div class="form-group">
+        <label for="cardNumber">Credit Card Number:</label>
+        <input type="text" id="cardNumber" placeholder="Enter your card number">
+    </div>
+    <button class="btn" onclick="validateCreditCard()">Validate</button>
+    <div id="cardType"></div>
+    <div id="result"></div>
+</div>
+</body>
+</html>
